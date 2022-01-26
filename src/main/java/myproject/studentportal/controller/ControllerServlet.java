@@ -61,7 +61,21 @@ public class ControllerServlet extends HttpServlet {
 			
 		}
 		if (reqPath.endsWith("delete.do")) {
-
+			String sid = request.getParameter("sid");
+			String status = studentService.deleteStudent(sid);
+			RequestDispatcher requestDispatcher = null;
+			if(status.equals("success")) {
+				requestDispatcher = request.getRequestDispatcher("success.html");
+				requestDispatcher.forward(request, response);
+			}
+			if(status.equals("failure")) {
+				requestDispatcher = request.getRequestDispatcher("failure.html");
+				requestDispatcher.forward(request, response);
+			}
+			if(status.equals("notexisted")) {
+				requestDispatcher = request.getRequestDispatcher("notexisted.html");
+				requestDispatcher.forward(request, response);
+			}
 		}
 
 	}

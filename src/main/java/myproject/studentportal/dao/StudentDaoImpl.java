@@ -62,8 +62,29 @@ public class StudentDaoImpl implements StudentDao{
 
 	@Override
 	public String delete(String sid) {
-
-		return null;
+		String status = "";
+		try {
+			Connection con = ConnectionFactory.getConnection();
+			PreparedStatement ps = con.prepareStatement("select * from student where sid=?");
+			ps.setString(1, sid);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				ps = con.prepareStatement("delete from student where sid=?");
+				ps.setString(1, sid);
+				int row = ps.executeUpdate();
+				if(row==1) {
+					status = "success";
+				}else {
+					status ="failure";
+				}
+			}else {
+				status = "notexisted";
+			}
+		}catch (Exception e) {
+			status = "failure";
+			e.printStackTrace();
+		}
+		return status;
 	}
 
 }
