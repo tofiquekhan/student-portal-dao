@@ -41,8 +41,23 @@ public class StudentDaoImpl implements StudentDao{
 
 	@Override
 	public Student search(String sid) {
-		
-		return null;
+		Student student = null;
+		try {
+			Connection con = ConnectionFactory.getConnection();
+			PreparedStatement ps = con.prepareStatement("select * from student where sid=?");
+			ps.setString(1, sid);
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				student = new Student();
+				student.setSid(rs.getString("sid"));
+				student.setSname(rs.getString("sname"));
+				student.setSaddr(rs.getString("saddr"));
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return student;
 	}
 
 	@Override

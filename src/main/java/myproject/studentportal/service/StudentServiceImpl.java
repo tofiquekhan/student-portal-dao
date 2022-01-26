@@ -15,8 +15,9 @@ public class StudentServiceImpl implements StudentService{
 
 	@Override
 	public Student searchStudent(String sid) {
-		
-		return null;
+		StudentDao studentDao = StudentDaoFactory.getStudentDao();
+		Student student = studentDao.search(sid);
+		return student;
 	}
 
 	@Override

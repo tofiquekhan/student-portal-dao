@@ -47,7 +47,18 @@ public class ControllerServlet extends HttpServlet {
 			}
 		}
 		if (reqPath.endsWith("search.do")) {
-
+			String sid = request.getParameter("sid");
+			Student student = studentService.searchStudent(sid);
+			RequestDispatcher requestDispatcher = null;
+			if(student!=null) {
+				request.setAttribute("student", student);
+				requestDispatcher = request.getRequestDispatcher("display.jsp");
+				requestDispatcher.forward(request, response);
+			}else {
+				requestDispatcher = request.getRequestDispatcher("notexisted.html");
+				requestDispatcher.forward(request, response);
+			}
+			
 		}
 		if (reqPath.endsWith("delete.do")) {
 
